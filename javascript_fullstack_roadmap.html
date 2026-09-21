@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete JavaScript & Full-Stack Developer Roadmap</title>
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --primary: #2563eb;
+            --primary-light: #dbeafe;
+            --primary-dark: #1e40af;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 400;
+            margin-bottom: 25px;
+        }
+
+        .meta-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(4px);
+        }
+
+        .meta-info p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .meta-info p:last-child {
+            margin-bottom: 0;
+        }
+
+        .meta-info strong {
+            color: #fef08a;
+            margin-right: 6px;
+        }
+
+        /* Progress Bar Dashboard */
+        .progress-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius);
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+            border: 1px solid var(--border);
+        }
+
+        .progress-headline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .progress-bar-wrapper {
+            background: var(--border);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, var(--success), #34d399);
+            width: 0%;
+            height: 100%;
+            transition: width 0.4s ease;
+        }
+
+        /* Phase Card Styles */
+        .phase-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .phase-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05);
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .phase-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .phase-time {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin: 20px 0 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Task list styling */
+        .task-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        @media(min-width: 768px) {
+            .task-list.grid-2 {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 12px;
+            background: var(--bg-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .task-item:hover {
+            background: #e2e8f0;
+        }
+
+        .task-item input[type="checkbox"] {
+            margin-right: 12px;
+            margin-top: 4px;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--success);
+            cursor: pointer;
+        }
+
+        .task-item span {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            transition: color 0.2s, text-decoration 0.2s;
+        }
+
+        .task-item input[type="checkbox"]:checked + span {
+            color: var(--text-muted);
+            text-decoration: line-through;
+        }
+
+        .nested-list {
+            margin-left: 28px;
+            margin-top: 4px;
+            border-left: 2px dashed var(--border);
+            padding-left: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        code {
+            background: #e2e8f0;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+            color: #0f172a;
+        }
+
+        input[type="checkbox"]:checked + span code {
+            background: #cbd5e1;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Complete JavaScript & Full-Stack Developer Roadmap</h1>
+        <h2>Basic &rarr; Advanced &rarr; Professional</h2>
+        <div class="meta-info">
+            <p><strong>GOAL:</strong> Become a JavaScript Frontend Developer &rarr; Full-Stack Developer &rarr; Professional JavaScript/TypeScript Developer.</p>
+            <p><strong>Suggested daily study time:</strong> Minimum: 1 hour | Recommended: 2–3 hours</p>
+            <p><strong>Best method:</strong> Learn &rarr; Practice &rarr; Build &rarr; Review</p>
+        </div>
+    </header>
+
+    <!-- Progress Dashboard -->
+    <div class="progress-container">
+        <div class="progress-headline">
+            <span>Your Roadmap Progress</span>
+            <span id="progress-text">0% Completed (0/0)</span>
+        </div>
+        <div class="progress-bar-wrapper">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+    </div>
+
+    <!-- PHASE 0 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 0 — PREREQUISITES</div>
+            <div class="phase-time">Estimated time: 1–2 weeks</div>
+        </div>
+        
+        <div class="section-title">📖 Learn</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>How websites work</span></label>
+            <label class="task-item"><input type="checkbox"><span>Browser basics</span></label>
+            <label class="task-item"><input type="checkbox"><span>HTML basics</span></label>
+            <label class="task-item"><input type="checkbox"><span>CSS basics</span></label>
+            <label class="task-item"><input type="checkbox"><span>File/folder structure</span></label>
+            <label class="task-item"><input type="checkbox"><span>Install VS Code</span></label>
+            <label class="task-item"><input type="checkbox"><span>Install Node.js</span></label>
+            <label class="task-item"><input type="checkbox"><span>Use browser DevTools</span></label>
+            <label class="task-item"><input type="checkbox"><span>Basic terminal commands</span></label>
+        </div>
+
+        <div class="section-title">🌐 HTML Topics</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Headings, paragraphs, links, images</span></label>
+            <label class="task-item"><input type="checkbox"><span>Lists, tables</span></label>
+            <label class="task-item"><input type="checkbox"><span>Forms and inputs</span></label>
+            <label class="task-item"><input type="checkbox"><span>Semantic HTML</span></label>
+            <label class="task-item"><input type="checkbox"><span>Accessibility basics</span></label>
+        </div>
+
+        <div class="section-title">🎨 CSS Topics</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Selectors</span></label>
+            <label class="task-item"><input type="checkbox"><span>Colors, fonts, spacing</span></label>
+            <label class="task-item"><input type="checkbox"><span>Box model</span></label>
+            <label class="task-item"><input type="checkbox"><span>Flexbox</span></label>
+            <label class="task-item"><input type="checkbox"><span>CSS Grid</span></label>
+            <label class="task-item"><input type="checkbox"><span>Responsive design</span></label>
+            <label class="task-item"><input type="checkbox"><span>Media queries</span></label>
+        </div>
+
+        <div class="section-title">🛠️ Mini Projects</div>
+        <div class="task-list">
+            <label class="task-item"><input type="checkbox"><span>Personal profile page</span></label>
+            <label class="task-item"><input type="checkbox"><span>Simple landing page</span></label>
+            <label class="task-item"><input type="checkbox"><span>Login form UI</span></label>
+            <label class="task-item"><input type="checkbox"><span>Responsive portfolio homepage</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 1 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 1 — JAVASCRIPT FUNDAMENTALS</div>
+            <div class="phase-time">Estimated time: 2–4 weeks</div>
+        </div>
+
+        <div class="section-title">📖 Learn</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>What JavaScript is</span></label>
+            <label class="task-item"><input type="checkbox"><span>Where JavaScript runs: Browser and Node.js</span></label>
+            <label class="task-item"><input type="checkbox"><span>Running JS with browser console</span></label>
+            <label class="task-item"><input type="checkbox"><span>Running JS files with Node.js</span></label>
+            <label class="task-item"><input type="checkbox"><span>Comments</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>console.log()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Variables: <code>let</code>, <code>const</code>, <code>var</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Naming conventions</span></label>
+        </div>
+
+        <div class="section-title">🗂️ Data Types</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>String</span></label>
+            <label class="task-item"><input type="checkbox"><span>Number</span></label>
+            <label class="task-item"><input type="checkbox"><span>Boolean</span></label>
+            <label class="task-item"><input type="checkbox"><span>undefined</span></label>
+            <label class="task-item"><input type="checkbox"><span>null</span></label>
+            <label class="task-item"><input type="checkbox"><span>BigInt</span></label>
+            <label class="task-item"><input type="checkbox"><span>Symbol</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>typeof</code> operator</span></label>
+            <label class="task-item"><input type="checkbox"><span>Template literals</span></label>
+            <label class="task-item"><input type="checkbox"><span>String methods</span></label>
+            <label class="task-item"><input type="checkbox"><span>Number methods</span></label>
+            <label class="task-item"><input type="checkbox"><span>Type conversion</span></label>
+            <label class="task-item"><input type="checkbox"><span>Type coercion</span></label>
+            <label class="task-item"><input type="checkbox"><span>Truthy and falsy values</span></label>
+        </div>
+
+        <div class="section-title">⚡ Operators</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Arithmetic operators: <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>, <code>**</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Assignment operators: <code>=</code>, <code>+=</code>, <code>-=</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Comparison operators: <code>===</code>, <code>!==</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Logical operators: <code>&&</code>, <code>||</code>, <code>!</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Nullish coalescing: <code>??</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Optional chaining: <code>?.</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Ternary operator: <code>condition ? value1 : value2</code></span></label>
+        </div>
+
+        <div class="section-title">📝 Practice</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Print your name and age</span></label>
+            <label class="task-item"><input type="checkbox"><span>Add two numbers</span></label>
+            <label class="task-item"><input type="checkbox"><span>Convert Celsius to Fahrenheit</span></label>
+            <label class="task-item"><input type="checkbox"><span>Calculate BMI</span></label>
+            <label class="task-item"><input type="checkbox"><span>Calculate total price</span></label>
+            <label class="task-item"><input type="checkbox"><span>Check even or odd number</span></label>
+            <label class="task-item"><input type="checkbox"><span>Check data type of values</span></label>
+        </div>
+
+        <div class="section-title">🛠️ Projects</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Age calculator</span></label>
+            <label class="task-item"><input type="checkbox"><span>Temperature converter</span></label>
+            <label class="task-item"><input type="checkbox"><span>Simple calculator</span></label>
+            <label class="task-item"><input type="checkbox"><span>Tip calculator</span></label>
+            <label class="task-item"><input type="checkbox"><span>BMI calculator</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 2 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 2 — CONTROL FLOW AND LOGIC BUILDING</div>
+            <div class="phase-time">Estimated time: 2–3 weeks</div>
+        </div>
+
+        <div class="section-title">📖 Learn</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span><code>if</code> statement</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>else</code> statement</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>else if</code> statement</span></label>
+            <label class="task-item"><input type="checkbox"><span>Nested conditions</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>switch</code> statement</span></label>
+            <label class="task-item"><input type="checkbox"><span>Ternary operator</span></label>
+            <label class="task-item"><input type="checkbox"><span>Logical conditions</span></label>
+            <label class="task-item"><input type="checkbox"><span>Short-circuit evaluation</span></label>
+        </div>
+
+        <div class="section-title">🔄 Loops</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span><code>for</code> loop</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>while</code> loop</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>do...while</code> loop</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>for...of</code> loop</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>for...in</code> loop</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>break</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>continue</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Nested loops</span></label>
+        </div>
+
+        <div class="section-title">🧠 Practice Problems</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Find largest of three numbers</span></label>
+            <label class="task-item"><input type="checkbox"><span>Check positive, negative, or zero</span></label>
+            <label class="task-item"><input type="checkbox"><span>Grade calculator</span></label>
+            <label class="task-item"><input type="checkbox"><span>Leap year checker</span></label>
+            <label class="task-item"><input type="checkbox"><span>Multiplication table generator</span></label>
+            <label class="task-item"><input type="checkbox"><span>Sum numbers from 1 to N</span></label>
+            <label class="task-item"><input type="checkbox"><span>Factorial calculator</span></label>
+            <label class="task-item"><input type="checkbox"><span>Prime number checker</span></label>
+            <label class="task-item"><input type="checkbox"><span>Fibonacci series</span></label>
+            <label class="task-item"><input type="checkbox"><span>Number guessing game</span></label>
+        </div>
+
+        <div class="section-title">🛠️ Projects</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Grade calculator app</span></label>
+            <label class="task-item"><input type="checkbox"><span>Rock Paper Scissors game</span></label>
+            <label class="task-item"><input type="checkbox"><span>Number guessing game UI</span></label>
+            <label class="task-item"><input type="checkbox"><span>Simple ATM simulation</span></label>
+            <label class="task-item"><input type="checkbox"><span>Password strength checker</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 3 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 3 — FUNCTIONS AND PROBLEM SOLVING</div>
+            <div class="phase-time">Estimated time: 3–4 weeks</div>
+        </div>
+
+        <div class="section-title">📖 Learn</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Function declaration</span></label>
+            <label class="task-item"><input type="checkbox"><span>Function expression</span></label>
+            <label class="task-item"><input type="checkbox"><span>Arrow functions</span></label>
+            <label class="task-item"><input type="checkbox"><span>Parameters & Arguments</span></label>
+            <label class="task-item"><input type="checkbox"><span>Return statement</span></label>
+            <label class="task-item"><input type="checkbox"><span>Default parameters</span></label>
+            <label class="task-item"><input type="checkbox"><span>Rest parameters</span></label>
+            <label class="task-item"><input type="checkbox"><span>Callback functions</span></label>
+            <label class="task-item"><input type="checkbox"><span>Higher-order functions</span></label>
+            <label class="task-item"><input type="checkbox"><span>Anonymous functions</span></label>
+            <label class="task-item"><input type="checkbox"><span>Scope (Global, Function, Block)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Hoisting</span></label>
+            <label class="task-item"><input type="checkbox"><span>Recursion basics</span></label>
+        </div>
+
+        <div class="section-title">🧠 Practice Problems</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Create add(), subtract(), multiply(), divide()</span></label>
+            <label class="task-item"><input type="checkbox"><span>Check palindrome</span></label>
+            <label class="task-item"><input type="checkbox"><span>Reverse a string</span></label>
+            <label class="task-item"><input type="checkbox"><span>Count vowels in a string</span></label>
+            <label class="task-item"><input type="checkbox"><span>Find maximum & minimum values</span></label>
+            <label class="task-item"><input type="checkbox"><span>Calculate average</span></label>
+            <label class="task-item"><input type="checkbox"><span>Generate random password logic</span></label>
+            <label class="task-item"><input type="checkbox"><span>Validate email format</span></label>
+            <label class="task-item"><input type="checkbox"><span>Calculate discount</span></label>
+        </div>
+
+        <div class="section-title">🛠️ Projects</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Random password generator</span></label>
+            <label class="task-item"><input type="checkbox"><span>Quiz game logic</span></label>
+            <label class="task-item"><input type="checkbox"><span>Expense calculator</span></label>
+            <label class="task-item"><input type="checkbox"><span>Unit converter</span></label>
+            <label class="task-item"><input type="checkbox"><span>Simple banking system logic</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 4 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 4 — ARRAYS</div>
+            <div class="phase-time">Estimated time: 2–3 weeks</div>
+        </div>
+
+        <div class="section-title">📖 Learn</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Create arrays & Access items</span></label>
+            <label class="task-item"><input type="checkbox"><span>Change array items & length</span></label>
+            <label class="task-item"><input type="checkbox"><span>Nested arrays</span></label>
+            <label class="task-item"><input type="checkbox"><span>Spread operator with arrays</span></label>
+            <label class="task-item"><input type="checkbox"><span>Destructuring arrays</span></label>
+        </div>
+
+        <div class="section-title">⚙️ Array Methods</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span><code>push()</code> / <code>pop()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>shift()</code> / <code>unshift()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>slice()</code> / <code>splice()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>concat()</code> / <code>join()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>includes()</code> / <code>indexOf()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>lastIndexOf()</code> / <code>reverse()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>sort()</code> / <code>flat()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>forEach()</code> / <code>map()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>filter()</code> / <code>find()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>findIndex()</code> / <code>reduce()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>some()</code> / <code>every()</code></span></label>
+        </div>
+
+        <div class="section-title">🧠 Practice Problems</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Find sum of array values</span></label>
+            <label class="task-item"><input type="checkbox"><span>Find largest number in array</span></label>
+            <label class="task-item"><input type="checkbox"><span>Remove duplicate values</span></label>
+            <label class="task-item"><input type="checkbox"><span>Sort numbers correctly</span></label>
+            <label class="task-item"><input type="checkbox"><span>Filter adult users</span></label>
+            <label class="task-item"><input type="checkbox"><span>Calculate total cart price</span></label>
+            <label class="task-item"><input type="checkbox"><span>Convert names to uppercase</span></label>
+        </div>
+
+        <div class="section-title">🛠️ Projects</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Shopping cart logic</span></label>
+            <label class="task-item"><input type="checkbox"><span>Student marks manager</span></label>
+            <label class="task-item"><input type="checkbox"><span>Product filter system</span></label>
+            <label class="task-item"><input type="checkbox"><span>Expense tracker data logic</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 5 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 5 — OBJECTS</div>
+            <div class="phase-time">Estimated time: 2–3 weeks</div>
+        </div>
+
+        <div class="section-title">📖 Learn</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Create objects & properties</span></label>
+            <label class="task-item"><input type="checkbox"><span>Dot vs Bracket notation</span></label>
+            <label class="task-item"><input type="checkbox"><span>Add/update/delete properties</span></label>
+            <label class="task-item"><input type="checkbox"><span>Nested objects & methods</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>this</code> keyword basics</span></label>
+            <label class="task-item"><input type="checkbox"><span>Object destructuring</span></label>
+            <label class="task-item"><input type="checkbox"><span>Spread operator with objects</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>Object.keys()</code> / <code>values()</code> / <code>entries()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Optional chaining & Nullish coalescing</span></label>
+        </div>
+
+        <div class="section-title">🧠 Practice Problems</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Create a user object & update profile</span></label>
+            <label class="task-item"><input type="checkbox"><span>Calculate cart total from object lists</span></label>
+            <label class="task-item"><input type="checkbox"><span>Search user by name</span></label>
+            <label class="task-item"><input type="checkbox"><span>Group products by category</span></label>
+        </div>
+
+        <div class="section-title">🛠️ Projects</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Contact book app</span></label>
+            <label class="task-item"><input type="checkbox"><span>Student management system</span></label>
+            <label class="task-item"><input type="checkbox"><span>Product inventory system</span></label>
+            <label class="task-item"><input type="checkbox"><span>User profile editor logic</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 6 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 6 — MODERN JAVASCRIPT (ES6+)</div>
+            <div class="phase-time">Estimated time: 2–4 weeks</div>
+        </div>
+
+        <div class="section-title">📖 Learn</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>let and const</span></label>
+            <label class="task-item"><input type="checkbox"><span>Template literals & Arrow functions</span></label>
+            <label class="task-item"><input type="checkbox"><span>Destructuring, Spread, and Rest operators</span></label>
+            <label class="task-item"><input type="checkbox"><span>Default parameters & Enhanced literals</span></label>
+            <label class="task-item"><input type="checkbox"><span>Modules: <code>export</code>, <code>default</code>, <code>import</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Set, Map, Symbol, BigInt basics</span></label>
+        </div>
+
+        <div class="section-title">🛠️ Projects</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Modular calculator</span></label>
+            <label class="task-item"><input type="checkbox"><span>Product management module</span></label>
+            <label class="task-item"><input type="checkbox"><span>Reusable utility functions package</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 7 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 7 — DOM MANIPULATION</div>
+            <div class="phase-time">Estimated time: 4–6 weeks</div>
+        </div>
+
+        <div class="section-title">📖 Learn</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>What DOM is & <code>document</code> object</span></label>
+            <label class="task-item"><input type="checkbox"><span>Selectors: <code>querySelector()</code>, <code>getElementById()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Change text: <code>textContent</code>, <code>innerHTML</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Change styles & <code>classList</code> (add, remove, toggle)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Attributes: <code>getAttribute()</code>, <code>setAttribute()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Create/remove elements: <code>createElement()</code>, <code>append()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>DOM traversal: parent, children, siblings</span></label>
+        </div>
+
+        <div class="section-title">⚡ Events</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span><code>addEventListener()</code> (click, input, change, submit)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Event object, <code>preventDefault()</code>, <code>stopPropagation()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Event bubbling & Event delegation</span></label>
+        </div>
+
+        <div class="section-title">📋 Forms & Storage</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Read input values & validate forms</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>localStorage</code> and <code>sessionStorage</code></span></label>
+            <label class="task-item"><input type="checkbox"><span><code>JSON.stringify()</code> and <code>JSON.parse()</code></span></label>
+        </div>
+
+        <div class="section-title">🛠️ Projects</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>To-do app with localStorage</span></label>
+            <label class="task-item"><input type="checkbox"><span>Digital clock & Stopwatch</span></label>
+            <label class="task-item"><input type="checkbox"><span>Pomodoro timer & Notes app</span></label>
+            <label class="task-item"><input type="checkbox"><span>Quiz app & Password generator</span></label>
+            <label class="task-item"><input type="checkbox"><span>Dark/light mode switcher</span></label>
+            <label class="task-item"><input type="checkbox"><span>Form validation app</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 8 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 8 — ASYNCHRONOUS JAVASCRIPT AND APIs</div>
+            <div class="phase-time">Estimated time: 3–5 weeks</div>
+        </div>
+
+        <div class="section-title">📖 Learn</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Synchronous vs Asynchronous JS</span></label>
+            <label class="task-item"><input type="checkbox"><span>Callbacks & Callback hell</span></label>
+            <label class="task-item"><input type="checkbox"><span>Promises (.then, .catch, .finally)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Async/Await & <code>try...catch</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Fetch API & JSON handling</span></label>
+            <label class="task-item"><input type="checkbox"><span>HTTP Status codes & Methods (GET, POST, PUT, DELETE)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Loading, Error, and Empty states</span></label>
+            <label class="task-item"><input type="checkbox"><span>Debouncing & Throttling basics</span></label>
+        </div>
+
+        <div class="section-title">🔒 API Safety</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Never expose secret API keys in frontend</span></label>
+            <label class="task-item"><input type="checkbox"><span>Environment variables usage</span></label>
+            <label class="task-item"><input type="checkbox"><span>Public vs Private API keys</span></label>
+        </div>
+
+        <div class="section-title">🛠️ Projects</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Weather app</span></label>
+            <label class="task-item"><input type="checkbox"><span>GitHub profile finder</span></label>
+            <label class="task-item"><input type="checkbox"><span>Movie search & Recipe finder</span></label>
+            <label class="task-item"><input type="checkbox"><span>Currency converter</span></label>
+            <label class="task-item"><input type="checkbox"><span>News app & Quote generator</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 9 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 9 — DEEP JAVASCRIPT CONCEPTS</div>
+            <div class="phase-time">Estimated time: 5–8 weeks</div>
+        </div>
+
+        <div class="section-title">📖 Learn</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Execution context & Call stack</span></label>
+            <label class="task-item"><input type="checkbox"><span>Scope chain & Closures</span></label>
+            <label class="task-item"><input type="checkbox"><span>Hoisting & Temporal Dead Zone (TDZ)</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>this</code> keyword binding contexts</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>call()</code>, <code>apply()</code>, <code>bind()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Prototypes & Prototype chain</span></label>
+            <label class="task-item"><input type="checkbox"><span>Classes, Constructors, Inheritance, <code>super()</code></span></label>
+            <label class="task-item"><input type="checkbox"><span>Event loop, Microtask & Macrotask queues</span></label>
+            <label class="task-item"><input type="checkbox"><span>Shallow copy vs Deep copy & Immutability</span></label>
+        </div>
+
+        <div class="section-title">🛠️ Projects</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Custom event emitter</span></label>
+            <label class="task-item"><input type="checkbox"><span>Debounced search component</span></label>
+            <label class="task-item"><input type="checkbox"><span>Custom form validator / state manager</span></label>
+            <label class="task-item"><input type="checkbox"><span>Drag-and-drop task board</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 10 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 10 — GIT AND GITHUB</div>
+            <div class="phase-time">Estimated time: 1–2 weeks</div>
+        </div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Git vs GitHub concept</span></label>
+            <label class="task-item"><input type="checkbox"><span>Core commands (init, status, add, commit, log)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Branching (branch, checkout, switch, merge)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Remotes (pull, push, clone)</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>.gitignore</code> & <code>README.md</code> writing</span></label>
+            <label class="task-item"><input type="checkbox"><span>Pull Requests & resolving merge conflicts</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 11 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 11 — NPM, TOOLING, AND BUILD TOOLS</div>
+            <div class="phase-time">Estimated time: 1–2 weeks</div>
+        </div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Node.js basics & npm structure</span></label>
+            <label class="task-item"><input type="checkbox"><span><code>package.json</code> & scripts management</span></label>
+            <label class="task-item"><input type="checkbox"><span>Dependencies vs Dev dependencies</span></label>
+            <label class="task-item"><input type="checkbox"><span>Vite bundler setup</span></label>
+            <label class="task-item"><input type="checkbox"><span>ESLint & Prettier configuration</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 12 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 12 — TYPESCRIPT</div>
+            <div class="phase-time">Estimated time: 3–6 weeks</div>
+        </div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Why TS & Type inference vs Explicit types</span></label>
+            <label class="task-item"><input type="checkbox"><span>Primitives & Special types (any, unknown, never, void)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Type aliases vs Interfaces</span></label>
+            <label class="task-item"><input type="checkbox"><span>Union, Intersection, and Generics</span></label>
+            <label class="task-item"><input type="checkbox"><span>Utility types (Partial, Omit, Pick, Record)</span></label>
+            <label class="task-item"><input type="checkbox"><span>TypeScript with DOM & React</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 13 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 13 — REACT FRONTEND DEVELOPMENT</div>
+            <div class="phase-time">Estimated time: 2–4 months</div>
+        </div>
+        <div class="section-title">⚛️ React Fundamentals</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Components, JSX, Props, and State</span></label>
+            <label class="task-item"><input type="checkbox"><span>Controlled components & Forms</span></label>
+            <label class="task-item"><input type="checkbox"><span>Hooks: useState, useEffect, useRef</span></label>
+            <label class="task-item"><input type="checkbox"><span>Performance Hooks: useMemo, useCallback</span></label>
+            <label class="task-item"><input type="checkbox"><span>Context API & Custom hooks</span></label>
+            <label class="task-item"><input type="checkbox"><span>React Router navigation</span></label>
+        </div>
+        <div class="section-title">🗃️ State Management & Styling</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Zustand or Redux Toolkit</span></label>
+            <label class="task-item"><input type="checkbox"><span>TanStack Query / React Query</span></label>
+            <label class="task-item"><input type="checkbox"><span>Tailwind CSS framework</span></label>
+        </div>
+        <div class="section-title">🛠️ React Projects</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Weather dashboard</span></label>
+            <label class="task-item"><input type="checkbox"><span>E-commerce frontend website</span></label>
+            <label class="task-item"><input type="checkbox"><span>Admin dashboard UI</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 14 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 14 — NEXT.JS</div>
+            <div class="phase-time">Estimated time: 3–6 weeks</div>
+        </div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>File-based routing (Layouts, Pages)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Server vs Client components</span></label>
+            <label class="task-item"><input type="checkbox"><span>Data fetching strategy & Route handlers</span></label>
+            <label class="task-item"><input type="checkbox"><span>SEO optimization & Metadata</span></label>
+            <label class="task-item"><input type="checkbox"><span>Full-stack Next.js applications</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 15 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 15 — NODE.JS BACKEND DEVELOPMENT</div>
+            <div class="phase-time">Estimated time: 2–4 months</div>
+        </div>
+        <div class="section-title">🚂 Express.js & Core</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Node runtime environment & FS module</span></label>
+            <label class="task-item"><input type="checkbox"><span>Express server setup & routing</span></label>
+            <label class="task-item"><input type="checkbox"><span>Custom & Error Middlewares</span></label>
+            <label class="task-item"><input type="checkbox"><span>MVC architecture & REST API Design</span></label>
+        </div>
+        <div class="section-title">🔐 Auth & Security</div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Password hashing with bcrypt</span></label>
+            <label class="task-item"><input type="checkbox"><span>JWT authentication (Access/Refresh tokens)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Role-based authorization</span></label>
+            <label class="task-item"><input type="checkbox"><span>CORS, Helmet, Rate limiting, OWASP top 10</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 16 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 16 — DATABASES</div>
+            <div class="phase-time">Estimated time: 1–2 months</div>
+        </div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Relational database design (PostgreSQL)</span></label>
+            <label class="task-item"><input type="checkbox"><span>SQL Core queries (SELECT, JOIN, WHERE, Transactions)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Prisma ORM setup & migrations</span></label>
+            <label class="task-item"><input type="checkbox"><span>NoSQL database options (MongoDB & Mongoose)</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 17 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 17 — TESTING</div>
+            <div class="phase-time">Estimated time: 3–6 weeks</div>
+        </div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Unit, Integration, and E2E testing benefits</span></label>
+            <label class="task-item"><input type="checkbox"><span>Vitest or Jest for pure logic testing</span></label>
+            <label class="task-item"><input type="checkbox"><span>React Testing Library & Playwright/Supertest</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 18 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 18 — DEPLOYMENT AND DEVOPS BASICS</div>
+            <div class="phase-time">Estimated time: 2–4 weeks</div>
+        </div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Frontend deployment (Vercel / Netlify)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Backend deployment (Render / VPS / Railway)</span></label>
+            <label class="task-item"><input type="checkbox"><span>Docker basics: Dockerfile & Compose</span></label>
+            <label class="task-item"><input type="checkbox"><span>CI/CD flows with GitHub Actions</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 19 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 19 — ADVANCED PROFESSIONAL TOPICS</div>
+            <div class="phase-time">Estimated time: Ongoing</div>
+        </div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Web performance & Core Web Vitals</span></label>
+            <label class="task-item"><input type="checkbox"><span>Caching with Redis & Message queues</span></label>
+            <label class="task-item"><input type="checkbox"><span>Clean Architecture & SOLID design principles</span></label>
+            <label class="task-item"><input type="checkbox"><span>WebSockets & real-time communications</span></label>
+            <label class="task-item"><input type="checkbox"><span>Cloud platforms (AWS/GCP object storage & CDNs)</span></label>
+        </div>
+    </div>
+
+    <!-- PHASE 20 -->
+    <div class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title">PHASE 20 — PORTFOLIO AND JOB PREPARATION</div>
+            <div class="phase-time">Estimated time: 2–4 weeks</div>
+        </div>
+        <div class="task-list grid-2">
+            <label class="task-item"><input type="checkbox"><span>Build professional responsive portfolio</span></label>
+            <label class="task-item"><input type="checkbox"><span>Optimize GitHub profile and project READMEs</span></label>
+            <label class="task-item"><input type="checkbox"><span>Prepare resume focused on MERN/Fullstack stack</span></label>
+            <label class="task-item"><input type="checkbox"><span>Practice JS Data Structures & Algorithms basics</span></label>
+            <label class="task-item"><input type="checkbox"><span>Technical & Behavioral mock interviews</span></label>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+
+        // Assign unique IDs to checkboxes for persistence
+        checkboxes.forEach((cb, index) => {
+            cb.id = `roadmap-task-${index}`;
+            
+            // Load state from localStorage
+            const savedState = localStorage.getItem(cb.id);
+            if (savedState === 'true') {
+                cb.checked = true;
+            }
+
+            // Listen for changes
+            cb.addEventListener('change', updateProgress);
+        });
+
+        function updateProgress() {
+            const total = checkboxes.length;
+            let checkedCount = 0;
+
+            checkboxes.forEach((cb) => {
+                if (cb.checked) {
+                    checkedCount++;
+                }
+                // Save state
+                localStorage.setItem(cb.id, cb.checked);
+            });
+
+            const percentage = total > 0 ? Math.round((checkedCount / total) * 100) : 0;
+            
+            // Update UI
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `${percentage}% Completed (${checkedCount}/${total})`;
+        }
+
+        // Initial calculation
+        updateProgress();
+    });
+</script>
+
+</body>
+</html>
